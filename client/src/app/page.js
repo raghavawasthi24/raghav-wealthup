@@ -7,7 +7,7 @@ import React, { useState, useEffect } from "react";
 import { getCode, checkCode } from "../utils/action";
 
 
-export default function page() {
+export default function Page() {
     const [code, setCode] = useState("");
     const [inputCode, setInputCode] = useState("");
     const [message, setMessage] = useState("");
