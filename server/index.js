@@ -36,7 +36,7 @@ const CodeSchema = new mongoose.Schema({
 const Code = mongoose.model("Code", CodeSchema);
 
 app.get("/", (req, res) => {
-    res.send("API is working fine!");
+    res.send("hello welcome to wealthup");
 });
 
 app.get("/api/codes", async (req, res) => {
@@ -84,6 +84,7 @@ app.post("/api/codes/use", async (req, res) => {
 });
 
 function generateCode() {
+    console.log("i reached here")
     const characters =
         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     let result = "";

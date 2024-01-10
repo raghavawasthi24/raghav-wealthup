@@ -133,7 +133,7 @@ export default function page() {
             </main>
 
        
-                <div className="flex items-center flex-col gap-4 mt-5 mb-10">
+                <div className="flex items-center flex-col gap-4 mt-5 mb-10 ">
                 <h3>Section-2</h3>
                 <div className="flex flex-col gap-5 w-[400px]">
                     <div className="flex justify-between items-center">
