@@ -1,9 +1,44 @@
-import Button from '@/components/Button'
-import Checkbox from '@/components/Checkbox'
-import Image from 'next/image'
+"use client";
+
+import Image from "next/image";
+import Button from "@/components/Button";
+import Checkbox from "@/components/Checkbox";
+import React, { useState, useEffect } from "react";
+import { getCode, checkCode } from "../utils/action";
+
 
 export default function page() {
+    const [code, setCode] = useState("");
+    const [inputCode, setInputCode] = useState("");
+    const [message, setMessage] = useState("");
+
+    //fetching code every time page refreshes and on initial load
+    useEffect(() => {
+        fetchCode();
+    }, []);
+
+    const fetchCode = async () => {
+        try {
+            const newCode = await getCode();
+            setCode(newCode);
+            setMessage("");
+        } catch (error) {
+            console.error("Error fetching code:", error);
+            setMessage("Error fetching code. Please try again.");
+        }
+    };
+
+    const handleSubmit = async () => {
+        try {
+            const response = await checkCode(inputCode);
+            setMessage(response.message);
+        } catch (error) {
+            console.error("Error using code:", error);
+            setMessage(error.response.data.error);
+        }
+    };
   return (
+    <>
     <main className="flex items-center justify-center w-full md:min-h-screen py-5">
                 {/* Main Container */}
                 <div className="relative overflow-hidden w-[700px] h-[650px]">
@@ -96,5 +131,33 @@ export default function page() {
                     </div>
                 </div>
             </main>
+
+       
+                <div className="flex items-center flex-col gap-4 mt-5 mb-10">
+                <h3>Section-2</h3>
+                <div className="flex flex-col gap-5 w-[400px]">
+                    <div className="flex justify-between items-center">
+                        <p>Code: {code}</p>
+                        <button onClick={fetchCode} className="border-2">
+                            Refresh
+                        </button>
+                    </div>
+                    <div className="flex justify-between">
+                        <input
+                            type="text"
+                            value={inputCode}
+                            onChange={(e) => setInputCode(e.target.value)}
+                            placeholder="Enter the above code"
+                            className="border-2"
+                        />
+                        <button onClick={handleSubmit} className="border-2">
+                            Submit
+                        </button>
+                    </div>
+                    <p>Message: {message}</p>
+                </div>
+           
+            </div>
+    </>
   )
 }
